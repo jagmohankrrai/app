@@ -71,9 +71,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    public interface VolleyCallback {
-        void onSuccessResponse(JSONObject result);
-    }
+
     private void postDataUsingVolley(EditText memail, EditText mpassword ) {
         // url to post our data
         String url = "https://mockapi.io/clone/634034b5d1fcddf69cb3ddb5";
@@ -107,8 +105,5 @@ public class MainActivity extends AppCompatActivity {
         });
         queue.add(jsonObjectRequest);
         }
-
-
-
 }
 
