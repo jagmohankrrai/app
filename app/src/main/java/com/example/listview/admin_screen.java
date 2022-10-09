@@ -17,6 +17,7 @@ public class admin_screen extends AppCompatActivity {
         Intent intent = getIntent();
 
         String name = intent.getStringExtra("name");
+        String token = intent.getStringExtra("token");
         EditText edtText = (EditText) findViewById(R.id.editTextTextPersonName);
         edtText.setText(name);
         maddmem=findViewById(R.id.button);
@@ -24,7 +25,9 @@ public class admin_screen extends AppCompatActivity {
         maddmem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(admin_screen.this, add_employee.class));
+                Intent intent = new Intent(admin_screen.this, add_employee.class);
+                intent.putExtra("token", token);
+                startActivity(intent);
             }
         });
     }

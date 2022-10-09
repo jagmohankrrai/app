@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,6 +22,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     EditText memail,mpassword;
@@ -77,18 +82,18 @@ public class MainActivity extends AppCompatActivity {
         // url to post our data
         String url = "https://employee-manage-app-backend.araj.tk/api/auth/login";
 
-        JSONObject data= null;
+        JSONObject data = null;
         try {
-            data  = new JSONObject();
+            data = new JSONObject();
             // get employee name and salary
             //id = data.getString(String.valueOf(memail));
             //pass = data.getString(String.valueOf(mpassword));
-            id=memail;
-            pass=mpassword;
-            data.put("email",id);
-            data.put("password",pass);
-            Log.i("id",id);
-        }catch (JSONException e){
+            id = memail;
+            pass = mpassword;
+            data.put("email", id);
+            data.put("password", pass);
+            Log.i("id", id);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
@@ -96,22 +101,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    String admin_str = response.getString("isAdmin");
-                    String name = response.getString("name");
-                    Log.i("id",admin_str);
-                    String log="true";
-                    if(admin_str.equals(log))
-                    {
+                    String token = response.getString("token");
+                    JSONObject res = response.getJSONObject("user");
+                    String admin_str = res.getString("isAdmin");
+                    String name = res.getString("name");
+                    Log.i("id", token);
+                    String log = "true";
+                    if (admin_str.equals(log)) {
                         Intent intent = new Intent(MainActivity.this, admin_screen.class);
                         intent.putExtra("name", name);
+                        intent.putExtra("token", token);
                         startActivity(intent);
-                    }
-                    else
-                    {
+                    } else {
                         Intent intent = new Intent(MainActivity.this, member_activiy.class);
                         startActivity(intent);
                     }
-                   // String success = "success";
+                    // String success = "success";
                     //Toast.makeText(MainActivity.this, "Register Success!", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -125,5 +130,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         queue.add(jsonObjectRequest);
+
     }
 }

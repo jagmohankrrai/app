@@ -14,11 +14,13 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
+        android:hint="phone number"
         android:inputType="phone"
         app:layout_constraintBottom_toTopOf="@+id/TextPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
 
     <EditText
         android:id="@+id/EmailAddress"
@@ -28,6 +30,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="86dp"
         android:ems="10"
+        android:hint="email"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/department"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,8 +45,9 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
+        android:hint="date(yyyy-mm-dd)"
         android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPhone"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/department" />
@@ -56,12 +60,13 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="86dp"
         android:ems="10"
+        android:hint="password"
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/add_employee"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone"
-        app:layout_constraintVertical_bias="0.062" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
     <Button
         android:id="@+id/add_employee"
@@ -70,10 +75,11 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="84dp"
-        android:layout_marginBottom="188dp"
+        android:layout_marginBottom="80dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextPassword" />
 
@@ -85,6 +91,7 @@
         android:layout_marginTop="36dp"
         android:layout_marginEnd="101dp"
         android:ems="10"
+        android:hint="name"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/EmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,10 +106,27 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="101dp"
         android:ems="10"
+        android:hint="department"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/editTextDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EmailAddress" />
+
+    <EditText
+        android:id="@+id/editTextTime"
+        android:layout_width="239dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:hint="time(hh:mm:ss:aaa)"
+        android:inputType="time"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

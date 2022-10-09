@@ -3,8 +3,10 @@ package com.example.listview;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,16 +25,23 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class add_employee extends AppCompatActivity {
-    EditText email,password,mphone,mdate;
+    EditText email,password,mphone,mdate,mtime;
     EditText mname,mdep;
     Button madd;
-    String id,pass,name,dep,date,phone;
+    String id,pass,name,dep,date,phone,time;
     RequestQueue queue;
+    public  String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_employee);
+        Intent intent = getIntent();
+
+         token = intent.getStringExtra("token");
         email =findViewById(R.id.EmailAddress);
         password=findViewById(R.id.TextPassword);
         mname =findViewById(R.id.employee_name);
@@ -39,6 +49,7 @@ public class add_employee extends AppCompatActivity {
         mdate=findViewById(R.id.editTextDate);
         mdep = findViewById(R.id.department);
         madd=findViewById(R.id.add_employee);
+        mtime=findViewById(R.id.et_date);
         madd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +59,24 @@ public class add_employee extends AppCompatActivity {
                 String phone=mphone.getText().toString().trim();
                 String date=mdate.getText().toString().trim();
                 String dep=mdep.getText().toString().trim();
+                String time=mtime.getText().toString().trim();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if (date.matches("^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$"))
+                {
+                }
+                else
+                {
+                    mdate.setError("invalid date type");
+                    return;
+                }
+                if (time.matches("(?:[01]\\d|2[0123]):(?:[012345]\\d):(?:[012345]\\d)"))
+                {
+                }
+                else
+                {
+                    mtime.setError("invalid time type");
+                    return;
+                }
 
                 if (id.matches(emailPattern))
                 {
@@ -109,14 +137,14 @@ public class add_employee extends AppCompatActivity {
                     mphone.setError("password should be =10 char ");
                     return;
                 }
-                postDataUsingVolley(name,phone,id,pass,dep,date);
+                postDataUsingVolley(name,phone,id,pass,dep,date,time);
 
             }
         });
 
     }
-    public void postDataUsingVolley(String mname, String mphone, String email, String password, String mdep, String mdate){
-    String url = "https://mockapi.io/clone/634034b5d1fcddf69cb3ddb5";
+    public void postDataUsingVolley(String mname, String mphone, String email, String password, String mdep, String mdate,String mtime){
+    String url = "https://employee-manage-app-backend.araj.tk/api/auth/addemployee";
     JSONObject data=null;
         data  = new JSONObject();
 
@@ -125,15 +153,16 @@ public class add_employee extends AppCompatActivity {
             pass = password;
             name=mname;
             dep = mdep;
-            date = mdate;
+            date = mdate +" " + mtime;
+
             Log.i("id",date);
             phone=mphone;
+            data.put("name",name);
             data.put("email",id);
             data.put("password",pass);
-            data.put("name",name);
+            data.put("joiningDate",date);
+            data.put("contact",phone);
             data.put("department",dep);
-            data.put("date",date);
-            data.put("phone",phone);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -147,6 +176,7 @@ public class add_employee extends AppCompatActivity {
                 String admin_str = response.getString("error");
                 if(admin_str.equals("null"))
                 {
+                    Toast.makeText(add_employee.this, "member added susccefully " , Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else
@@ -163,7 +193,19 @@ public class add_employee extends AppCompatActivity {
             // method to handle errors.
             Toast.makeText(add_employee.this, "Fail to get response = " + error, Toast.LENGTH_SHORT).show();
         }
-    });
+    }){
+        @Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String, String> headers = new HashMap<>();
+            //String credentials = "username:password";
+            String auth = "Token "
+                     + token ;
+            headers.put("Accept", "application/json");
+            headers.put("Content-Type", "application/json");
+            headers.put("Authorization", auth);
+            return headers;
+            }
+        };
         queue.add(jsonObjectRequest);
 }
 }
