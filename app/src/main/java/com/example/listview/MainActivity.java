@@ -2,6 +2,7 @@ package com.example.listview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -97,7 +98,17 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     String admin_str = response.getString("isAdmin");
                     Log.i("id",admin_str);
-
+                    String log="true";
+                    if(admin_str.equals(log))
+                    {
+                        Intent intent = new Intent(MainActivity.this, admin_screen.class);
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(MainActivity.this, member_activiy.class);
+                        startActivity(intent);
+                    }
                    // String success = "success";
                     //Toast.makeText(MainActivity.this, "Register Success!", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
