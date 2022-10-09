@@ -97,11 +97,13 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     String admin_str = response.getString("isAdmin");
+                    String name = response.getString("name");
                     Log.i("id",admin_str);
                     String log="true";
                     if(admin_str.equals(log))
                     {
                         Intent intent = new Intent(MainActivity.this, admin_screen.class);
+                        intent.putExtra("name", name);
                         startActivity(intent);
                     }
                     else

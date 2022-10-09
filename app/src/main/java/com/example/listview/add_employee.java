@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 public class add_employee extends AppCompatActivity {
     EditText email,password,mphone,mdate;
-    TextView mname,mdep;
+    EditText mname,mdep;
     Button madd;
     String id,pass,name,dep,date,phone;
     RequestQueue queue;
@@ -109,24 +109,25 @@ public class add_employee extends AppCompatActivity {
                     mphone.setError("password should be =10 char ");
                     return;
                 }
-                postDataUsingVolley(mname,mphone,email,password,mdep,mdate);
+                postDataUsingVolley(name,phone,id,pass,dep,date);
 
             }
         });
 
     }
-    public void postDataUsingVolley(TextView mname, EditText mphone, EditText email, EditText password, TextView mdep, EditText mdate){
+    public void postDataUsingVolley(String mname, String mphone, String email, String password, String mdep, String mdate){
     String url = "https://mockapi.io/clone/634034b5d1fcddf69cb3ddb5";
     JSONObject data=null;
         data  = new JSONObject();
 
         try {
-            id = data.getString(String.valueOf(email));
-            pass = data.getString(String.valueOf(password));
-            name=data.getString(String.valueOf(mname));
-            dep = data.getString(String.valueOf(mdep));
-            date = data.getString(String.valueOf(mdate));
-            phone=data.getString(String.valueOf(mphone));
+            id = email;
+            pass = password;
+            name=mname;
+            dep = mdep;
+            date = mdate;
+            Log.i("id",date);
+            phone=mphone;
             data.put("email",id);
             data.put("password",pass);
             data.put("name",name);
@@ -143,7 +144,15 @@ public class add_employee extends AppCompatActivity {
         @Override
         public void onResponse(JSONObject response) {
             try {
-                JSONObject res = response.getJSONObject("response");
+                String admin_str = response.getString("error");
+                if(admin_str.equals("null"))
+                {
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(add_employee.this, admin_str, Toast.LENGTH_SHORT).show();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
