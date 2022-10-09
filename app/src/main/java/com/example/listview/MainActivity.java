@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 String email=memail.getText().toString().trim();
                 String password=mpassword.getText().toString().trim();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-                Log.i("id",password);
+
                 if (email.matches(emailPattern))
                 {
                 }
@@ -63,26 +63,30 @@ public class MainActivity extends AppCompatActivity {
                 if(password.length()<8)
                 {
                     mpassword.setError("password should be >=8 char ");
-                    Log.i("id",password);
+
                     return;
                 }
-                postDataUsingVolley(memail,mpassword);
+                postDataUsingVolley(email,password);
             }
         });
 
     }
 
-    private void postDataUsingVolley(EditText memail, EditText mpassword ) {
+    private void postDataUsingVolley(String memail, String mpassword ) {
         // url to post our data
-        String url = "https://mockapi.io/clone/634034b5d1fcddf69cb3ddb5";
+        String url = "https://employee-manage-app-backend.araj.tk/api/auth/login";
+
         JSONObject data= null;
         try {
             data  = new JSONObject();
             // get employee name and salary
-            id = data.getString(String.valueOf(memail));
-            pass = data.getString(String.valueOf(mpassword));
-            data.put("email","id");
-            data.put("password","pass");
+            //id = data.getString(String.valueOf(memail));
+            //pass = data.getString(String.valueOf(mpassword));
+            id=memail;
+            pass=mpassword;
+            data.put("email",id);
+            data.put("password",pass);
+            Log.i("id",id);
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -91,7 +95,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONObject res = response.getJSONObject("response");
+                    String admin_str = response.getString("isAdmin");
+                    Log.i("id",admin_str);
+                   // String success = "success";
+                    //Toast.makeText(MainActivity.this, "Register Success!", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -104,6 +111,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         queue.add(jsonObjectRequest);
-        }
+    }
 }
-
