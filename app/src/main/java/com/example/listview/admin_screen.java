@@ -14,6 +14,7 @@ public class admin_screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_screen);
         maddmem=findViewById(R.id.button);
+
         maddmem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

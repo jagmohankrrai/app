@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,11 +23,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class add_employee extends AppCompatActivity {
-    EditText email,password,mname,mphone,mdep,mdate;
+    EditText email,password,mphone,mdate;
+    TextView mname,mdep;
     Button madd;
     String id,pass,name,dep,date,phone;
     RequestQueue queue;
-    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +115,7 @@ public class add_employee extends AppCompatActivity {
         });
 
     }
-    public void postDataUsingVolley(EditText mname,EditText mphone,EditText email,EditText password,EditText mdep,EditText mdate){
+    public void postDataUsingVolley(TextView mname, EditText mphone, EditText email, EditText password, TextView mdep, EditText mdate){
     String url = "https://mockapi.io/clone/634034b5d1fcddf69cb3ddb5";
     JSONObject data=null;
         data  = new JSONObject();
