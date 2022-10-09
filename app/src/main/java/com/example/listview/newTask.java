@@ -41,20 +41,21 @@ import java.util.Map;
 
 public class newTask extends AppCompatActivity {
     Spinner spinner;
-    EditText mdate,mtime,mabout;
+    EditText mdate,mtime,mabout,mmin;
     Button button1;
-    String token,date;
+    String token,date,work,about,min;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
         Intent intent = getIntent();
-
         token = intent.getStringExtra("token");
         mdate=findViewById(R.id.et_date);
         mabout=findViewById(R.id.textInputEditText);
         mtime=findViewById(R.id.editTextTime);
+        mmin=findViewById(R.id.editTextNumber);
         button1=(Button)findViewById(R.id.save);
+        String res;
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,8 +88,8 @@ public class newTask extends AppCompatActivity {
                     mdate.setError("date is required");
                     return;
                 }
-                postDataUsingVolley(date,time);
-                Toast.makeText(newTask.this, "Task Saved Successfully", Toast.LENGTH_SHORT).show();
+                postDataUsingVolley(date,time,about,min);
+                //Toast.makeText(newTask.this, "Task Saved Successfully", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -107,24 +108,28 @@ public class newTask extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 spinner.setSelection(i);
+                work=spinner.getSelectedItem().toString();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
     }
-    public void postDataUsingVolley( String mdate,String mtime){
-        String url = "https://employee-manage-app-backend.araj.tk/api/auth/addemployee";
+    public void postDataUsingVolley( String mdate,String mtime,String mabout,String mmin){
+        String url = "https://employee-manage-app-backend.araj.tk/api/task/addtask";
         JSONObject data=null;
         data  = new JSONObject();
 
         try {
             date = mdate +" " + mtime;
-            Log.i("id",date);
-            data.put("joiningDate",date);
+            about=mabout;
+            min=mmin;
+            Log.i("id",work);
+            data.put("description",about);
+            data.put("type",work);
+            data.put("timeTaken",min);
+            data.put("starTime",date);
 
         } catch (JSONException e) {
             e.printStackTrace();
