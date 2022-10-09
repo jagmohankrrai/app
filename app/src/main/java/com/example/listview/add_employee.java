@@ -38,15 +38,15 @@ public class add_employee extends AppCompatActivity {
         setContentView(R.layout.activity_add_employee);
         Intent intent = getIntent();
 
-         token = intent.getStringExtra("token");
+        token = intent.getStringExtra("token");
         email =findViewById(R.id.EmailAddress);
         password=findViewById(R.id.TextPassword);
         mname =findViewById(R.id.employee_name);
         mphone=findViewById(R.id.editTextPhone);
-        mdate=findViewById(R.id.et_date);
+        mdate=findViewById(R.id.Date3);
         mdep = findViewById(R.id.department);
         madd=findViewById(R.id.add_employee);
-        mtime=findViewById(R.id.et_date);
+        mtime=findViewById(R.id.Time2);
         madd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +173,6 @@ public class add_employee extends AppCompatActivity {
                 String admin_str = response.getString("error");
                 if(admin_str.equals("null"))
                 {
-                    Toast.makeText(add_employee.this, "member added susccefully " , Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else

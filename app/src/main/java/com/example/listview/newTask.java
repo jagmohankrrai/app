@@ -2,23 +2,16 @@ package com.example.listview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.TestLooperManager;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,9 +25,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +34,7 @@ public class newTask extends AppCompatActivity {
     Spinner spinner;
     EditText mdate,mtime,mabout,mmin;
     Button button1;
+    String res="";
     String token,date,work,about,min;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,24 +42,45 @@ public class newTask extends AppCompatActivity {
         setContentView(R.layout.activity_new_task);
         Intent intent = getIntent();
         token = intent.getStringExtra("token");
-        mdate=findViewById(R.id.et_date);
+        mdate=findViewById(R.id.etdate2);
         mabout=findViewById(R.id.textInputEditText);
         mtime=findViewById(R.id.editTextTime);
         mmin=findViewById(R.id.editTextNumber);
         button1=(Button)findViewById(R.id.save);
-        String res;
+        spinner=(Spinner) findViewById(R.id.spinner);
+
+        List<String>list=new ArrayList<String>();
+        list.add("Break");
+        list.add("Meetings");
+        list.add("Work");
+
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,list);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinner.setSelection(i);
+                res=spinner.getSelectedItem().toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String time=mtime.getText().toString().trim();
                 String date=mdate.getText().toString().trim();
                 String about=mabout.getText().toString().trim();
+                String min=mmin.getText().toString().trim();
+                work=res;
                 if(about.length()<1)
                 {
                     mabout.setError("deaprtment should be >=1 char ");
                     return;
                 }
-                if (date.matches("^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$"))
+                if (date.matches("^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$"))
                 {
                 }
                 else
@@ -93,43 +106,18 @@ public class newTask extends AppCompatActivity {
             }
         });
 
-
-        spinner=(Spinner) findViewById(R.id.spinner);
-
-        List<String>list=new ArrayList<String>();
-        list.add("Break");
-        list.add("Meetings");
-        list.add("Work");
-
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,list);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                spinner.setSelection(i);
-                work=spinner.getSelectedItem().toString();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-
     }
-    public void postDataUsingVolley( String mdate,String mtime,String mabout,String mmin){
+    public void postDataUsingVolley(String mdate, String mtime, String mabout, String mmin){
         String url = "https://employee-manage-app-backend.araj.tk/api/task/addtask";
         JSONObject data=null;
         data  = new JSONObject();
 
         try {
-            date = mdate +" " + mtime;
-            about=mabout;
-            min=mmin;
             Log.i("id",work);
-            data.put("description",about);
+            data.put("description",mabout);
             data.put("type",work);
-            data.put("timeTaken",min);
-            data.put("starTime",date);
+            data.put("timeTaken",mmin);
+            data.put("starTime", mdate+" "+mtime);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -143,7 +131,7 @@ public class newTask extends AppCompatActivity {
                     String admin_str = response.getString("error");
                     if(admin_str.equals("null"))
                     {
-                        Toast.makeText(newTask.this, "member added susccefully " , Toast.LENGTH_SHORT).show();
+
                         finish();
                     }
                     else

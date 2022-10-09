@@ -1,6 +1,7 @@
 package com.example.listview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,24 +18,39 @@ import java.util.List;
 public class employeeeAdapter extends RecyclerView.Adapter<employeeeAdapter.ViewHolder>  {
     private List<Data> mroundList;
     private Context mactivity;
-    public employeeeAdapter(Context context, List<Data> roundList){
-        mroundList=roundList;
-        mactivity=context;
+
+    public employeeeAdapter(Context context, List<Data> roundList) {
+        mroundList = roundList;
+        mactivity = context;
+
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public com.example.listview.employeeeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mactivity).inflate(R.layout.employee_adapter, parent, false);
-        return new ViewHolder(view);
+        return new employeeeAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull com.example.listview.employeeeAdapter.ViewHolder holder, int position) {
         Data roundList = mroundList.get(position);
-        String Name = mroundList.get(position).getName();
-        holder.name.setText(Name);
+        String data = mroundList.get(position).getName();
+
+        holder.emp_name.setText(data);
+        holder.cd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String LiveMatch_Url = roundList.getName();
+
+                Intent intent = new Intent(mactivity, member_activiy.class);
+                intent.putExtra("LiveMatch_Url",LiveMatch_Url);
+                intent.putExtra("data", data);
+                intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                mactivity.startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -43,16 +59,17 @@ public class employeeeAdapter extends RecyclerView.Adapter<employeeeAdapter.View
         return mroundList.size();
     }
 
-    TextView name;
-    CardView cd;
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public EditText name;
-
+        public TextView emp_name;
+        CardView cd;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.name);
+            emp_name = itemView.findViewById(R.id.name);
             cd=itemView.findViewById(R.id.cd1);
         }
+
     }
+
 }
