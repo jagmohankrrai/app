@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     String admin_str = response.getString("isAdmin");
                     Log.i("id",admin_str);
+
                    // String success = "success";
                     //Toast.makeText(MainActivity.this, "Register Success!", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {

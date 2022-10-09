@@ -126,12 +126,12 @@ public class add_employee extends AppCompatActivity {
             dep = data.getString(String.valueOf(mdep));
             date = data.getString(String.valueOf(mdate));
             phone=data.getString(String.valueOf(mphone));
-            data.put("email","id");
-            data.put("password","pass");
-            data.put("name","name");
-            data.put("department","dep");
-            data.put("date","date");
-            data.put("phone","phone");
+            data.put("email",id);
+            data.put("password",pass);
+            data.put("name",name);
+            data.put("department",dep);
+            data.put("date",date);
+            data.put("phone",phone);
 
         } catch (JSONException e) {
             e.printStackTrace();
