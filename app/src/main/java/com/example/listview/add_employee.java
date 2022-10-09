@@ -2,16 +2,13 @@ package com.example.listview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -46,7 +43,7 @@ public class add_employee extends AppCompatActivity {
         password=findViewById(R.id.TextPassword);
         mname =findViewById(R.id.employee_name);
         mphone=findViewById(R.id.editTextPhone);
-        mdate=findViewById(R.id.editTextDate);
+        mdate=findViewById(R.id.et_date);
         mdep = findViewById(R.id.department);
         madd=findViewById(R.id.add_employee);
         mtime=findViewById(R.id.et_date);

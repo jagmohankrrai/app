@@ -13,11 +13,15 @@ public class member_activiy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_activiy);
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        String token = intent.getStringExtra("token");
         button= (Button)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(member_activiy.this, newTask.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
             }
         });

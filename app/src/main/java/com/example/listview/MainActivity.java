@@ -114,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(MainActivity.this, member_activiy.class);
+                        intent.putExtra("name", name);
+                        intent.putExtra("token", token);
                         startActivity(intent);
                     }
                     // String success = "success";
