@@ -15,7 +15,6 @@ public class admin_screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_screen);
         Intent intent = getIntent();
-
         String name = intent.getStringExtra("name");
         String token = intent.getStringExtra("token");
         EditText edtText = (EditText) findViewById(R.id.editTextTextPersonName);
