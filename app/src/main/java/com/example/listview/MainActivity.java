@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject res = response.getJSONObject("user");
                     String admin_str = res.getString("isAdmin");
                     String name = res.getString("name");
+                    String id = res.getString("_id");
                     Log.i("id", token);
                     String log = "true";
                     if (admin_str.equals(log)) {
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, member_activiy.class);
                         intent.putExtra("name", name);
                         intent.putExtra("token", token);
+                        intent.putExtra("id", id);
                         startActivity(intent);
                     }
                     // String success = "success";
