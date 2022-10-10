@@ -51,7 +51,7 @@ public class newTask extends AppCompatActivity {
 
         List<String>list=new ArrayList<String>();
         list.add("Break");
-        list.add("Meetings");
+        list.add("Meeting");
         list.add("Work");
 
         ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,list);
