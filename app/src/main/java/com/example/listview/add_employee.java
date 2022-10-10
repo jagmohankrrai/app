@@ -170,14 +170,13 @@ public class add_employee extends AppCompatActivity {
         @Override
         public void onResponse(JSONObject response) {
             try {
-                String admin_str = response.getString("error");
-                if(admin_str.equals("null"))
-                {
-                    finish();
+                if (response.has("error")) {
+                    String admin_str = response.getString("error");
+                    Toast.makeText(add_employee.this, admin_str, Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(add_employee.this, admin_str, Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
