@@ -57,6 +57,8 @@ public class member_activiy extends AppCompatActivity {
         setContentView(R.layout.activity_member_activiy);
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
+        TextView edtText = findViewById(R.id.name_mem);
+        edtText.setText(name);
         toke = intent.getStringExtra("token");
         id=intent.getStringExtra("id");
         url="https://employee-manage-app-backend.araj.tk/api/task/gettask/"+id;
