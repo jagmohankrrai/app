@@ -82,8 +82,9 @@ public class admin_screen extends AppCompatActivity {
                                     for (int i=0; i < arr.length();i++ ) {
                                         JSONObject jsonObject = arr.getJSONObject(i);
                                         String name = jsonObject.getString("name");
-                                        Log.i("kjahkj::::::::::::::::::::::::::::::",name);
-                                        mroundList.add(new Data(name));
+                                        String id = jsonObject.getString("_id");
+//                                        Log.i("kjahkj::::::::::::::::::::::::::::::",name);
+                                        mroundList.add(new Data(name,id,token));
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();

@@ -129,7 +129,7 @@ public class add_employee extends AppCompatActivity {
                     mdep.setError("deaprtment should be >=1 char ");
                     return;
                 }
-                if(phone.length()<10)
+                if(phone.length()<10 && phone.length()>10)
                 {
                     mphone.setError("password should be =10 char ");
                     return;

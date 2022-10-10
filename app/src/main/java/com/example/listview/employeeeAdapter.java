@@ -41,11 +41,11 @@ public class employeeeAdapter extends RecyclerView.Adapter<employeeeAdapter.View
         holder.cd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String LiveMatch_Url = roundList.getName();
-
+                String id = roundList.getId();
+                String token = roundList.getToken();
                 Intent intent = new Intent(mactivity, member_activiy.class);
-                intent.putExtra("LiveMatch_Url",LiveMatch_Url);
-                intent.putExtra("data", data);
+                intent.putExtra("id", id);
+                intent.putExtra("token", token);
                 intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
                 mactivity.startActivity(intent);
 
